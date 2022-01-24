@@ -2,29 +2,42 @@
 
 import React from 'react';
 
-function Counter(props) {
-	const fromatCount = () =>
-		props.count.value === 0 ? 'Zero' : props.count.value;
+function Counter({ count, onIncreament, onDecreament, onDelete }) {
+	const fromatCount = () => (count.value === 0 ? 'Zero' : count.value);
 
 	const getBadgeClasses = () => {
 		let classes = 'badge mr-2 badge-';
-		classes += props.count.value === 0 ? 'warning' : 'primary';
+		classes += count.value === 0 ? 'warning' : 'primary';
 		return classes;
 	};
 
 	return (
 		<div className='container-fluid py-2'>
-			<span className={getBadgeClasses()}>{fromatCount()}</span>
-			<button
-				onClick={() => props.onIncreament(props.count)}
-				className='btn btn-secondary mr-2'>
-				Increament
-			</button>
-			<button
-				onClick={() => props.onDelete(props.count.id)}
-				className='btn btn-danger'>
-				Delete
-			</button>
+			<div className='row'>
+				<div className='col-2'>
+					<span className={getBadgeClasses()}>{fromatCount()}</span>
+				</div>
+				<div className='col-2'>
+					<button
+						onClick={() => onIncreament(count)}
+						className='btn btn-secondary'>
+						+
+					</button>
+				</div>
+				<div className='col-2'>
+					<button
+						onClick={() => onDecreament(count)}
+						className='btn btn-secondary'
+						disabled={count.value < 1 ? true : false}>
+						-
+					</button>
+				</div>
+				<div className='col-2'>
+					<button onClick={() => onDelete(count.id)} className='btn btn-danger'>
+						x
+					</button>
+				</div>
+			</div>
 		</div>
 	);
 }
